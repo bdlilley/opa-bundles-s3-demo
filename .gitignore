@@ -1,0 +1,9 @@
+.vscode
+.DS_Store
+HACK.md
+certs
+certs.*
+.terraform/
+*.tfstate*
+*.tfplan
+dist
