@@ -1,10 +1,10 @@
 # argocd controller role - allows assume role to the deployer roles
 module "irsa-argocd-extauth-s3" {
-  source                       = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
-  create_role                  = true
-  role_name                    = "${var.resourcePrefix}-irsa-argocd-extauth-s3"
-  provider_url                 = replace(module.eks-mgmt.eks.identity[0].oidc[0].issuer, "https://", "")
-  role_policy_arns             = [aws_iam_policy.irsa-argocd-extauth-s3.arn]
+  source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  create_role                   = true
+  role_name                     = "${var.resourcePrefix}-irsa-argocd-extauth-s3"
+  provider_url                  = replace(module.eks-mgmt.eks.identity[0].oidc[0].issuer, "https://", "")
+  role_policy_arns              = [aws_iam_policy.irsa-argocd-extauth-s3.arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:gloo-mesh-addons:ext-auth-service"]
 }
 

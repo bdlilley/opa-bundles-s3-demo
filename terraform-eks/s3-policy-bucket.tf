@@ -13,12 +13,12 @@ module "s3" {
 }
 
 output "s3-domain-name" {
-    value = module.s3.s3_bucket_bucket_regional_domain_name
+  value = module.s3.s3_bucket_bucket_regional_domain_name
 }
 
 resource "aws_s3_object" "object" {
   bucket = module.s3.s3_bucket_id
   key    = "bundle.tar.gz"
   source = "${path.module}/bundle.tar.gz"
-  etag = filemd5("${path.module}/bundle.tar.gz")
+  etag   = filemd5("${path.module}/bundle.tar.gz")
 }

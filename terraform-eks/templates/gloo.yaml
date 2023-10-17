@@ -35,9 +35,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   syncPolicy:
-    # automated:
-    #   prune: true
-    #   selfHeal: true 
+    automated:
+      prune: true
+      selfHeal: true 
     syncOptions:
     - CreateNamespace=false
   source:
@@ -53,34 +53,36 @@ spec:
         extAuthService:
           enabled: true
           extAuth:
+            extraAnnotations:
+              eks.amazonaws.com/role-arn: ${s3-irsa-role}
             opaServer:
               enabled: true
               configYaml: |
-              services:
-                s3:
-                  url: https://opa-demo-931713665590.s3.us-east-1.amazonaws.com
-                  credentials:
-                    s3_signing:
-                      web_identity_credentials:
-                        aws_region: us-east-1
-                        session_name: gloo-extauth-opa
-              bundles:
-                authz:
-                  service: s3
-                  resource: bundle.tar.gz
+                services:
+                  s3:
+                    url: https://opa-demo-931713665590.s3.us-east-1.amazonaws.com
+                    credentials:
+                      s3_signing:
+                        web_identity_credentials:
+                          aws_region: us-east-1
+                          session_name: gloo-extauth-opa
+                bundles:
+                  bundle:
+                    service: s3
+                    resource: bundle.tar.gz?alt=media
               config: |
-              services:
-                s3:
-                  url: https://opa-demo-931713665590.s3.us-east-1.amazonaws.com
-                  credentials:
-                    s3_signing:
-                      web_identity_credentials:
-                        aws_region: us-east-1
-                        session_name: gloo-extauth-opa
-              bundles:
-                authz:
-                  service: s3
-                  resource: bundle.tar.gz
+                services:
+                  s3:
+                    url: https://opa-demo-931713665590.s3.us-east-1.amazonaws.com
+                    credentials:
+                      s3_signing:
+                        web_identity_credentials:
+                          aws_region: us-east-1
+                          session_name: gloo-extauth-opa
+                bundles:
+                  bundle:
+                    service: s3
+                    resource: bundle.tar.gz?alt=media
         licensing:
           licenseSecretName: license
         glooAgent:

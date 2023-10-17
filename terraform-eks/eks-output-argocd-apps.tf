@@ -9,17 +9,12 @@ locals {
   }
 }
 
-# resource "local_file" "argocd-app-yaml" {
-#   for_each = local.allClusters
+resource "local_file" "argocd-gloo-yaml" {
+  for_each = local.allClusters
 
-#   content = templatefile("${path.module}/templates/apps.yaml", {
-#     ext-secrets-role-arn       = local.irsaOutputs[each.key].ext-secrets
-#     ext-dns-role-arn           = local.irsaOutputs[each.key].ext-dns
-#     aws-lb-controller-role-arn = local.irsaOutputs[each.key].aws-lb-controller
-#     cluster-name               = each.value.cluster-name
-#     cluster-name-short         = each.key
-#     destination-server         = each.value.destination-server
-#     destination-name           = each.value.destination-name
-#   })
-#   filename = "${path.module}/../argocd/_argocd-apps/generated-apps-${each.key}-.yaml"
-# }
+  content = templatefile("${path.module}/templates/gloo.yaml", {
+    s3-dns-name  = module.s3.s3_bucket_bucket_regional_domain_name
+    s3-irsa-role = module.irsa-argocd-extauth-s3.iam_role_arn
+  })
+  filename = "${path.module}/../argocd/_argocd-apps/generated-gloo-platform-${each.key}-.yaml"
+}
