@@ -17,9 +17,9 @@ cd terraform-eks
 # Set these to your own values for terraform state in S3
 #; (optional) or change [./_providers.tf](./_providers.tf) to not use S3 for state
 export TF_VAR_FILE="my-demo.tfvars"
-export TF_STATE_BUCKET=YOUR-BUCKET-NAME
 export TF_STATE_KEY=opa-demo
 export TF_STATE_REGION=us-east-1
+export TF_STATE_BUCKET=YOUR-BUCKET-NAME
 
 ./init.sh
 
