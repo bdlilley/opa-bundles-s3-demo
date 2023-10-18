@@ -1,4 +1,7 @@
-# argocd controller role - allows assume role to the deployer roles
+# creates an IRSA role that trusts the EKS server's OIDC issuer; this role must be added
+# to the extauth serviceAccount as an annotation:
+#
+#     eks.amazonaws.com/role-arn: <role-arn>
 module "irsa-argocd-extauth-s3" {
   source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
   create_role                   = true
